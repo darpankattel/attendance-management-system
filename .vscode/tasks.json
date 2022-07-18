@@ -10,7 +10,7 @@
         "-g",
         "${workspaceFolder}\\src\\*.cpp",
         "-o",
-        "${workspaceFolder}\\build\\debug\\${fileBasenameNoExtension}.exe",
+        "${workspaceFolder}\\build\\debug\\app.exe",
         "-I",
         "${workspaceFolder}\\include",
         "-I",
@@ -22,7 +22,10 @@
         "-l",
         "wxmsw32ud_core",
         "-l",
-        "wxbase32ud"
+        "wxbase32ud",
+        // run app in debug mode
+        "&&",
+        "${workspaceFolder}\\build\\debug\\app.exe"
       ],
       "options": {
         "cwd": "${fileDirname}"
@@ -42,7 +45,7 @@
         "-fdiagnostics-color=always",
         "${workspaceFolder}\\src\\*.cpp",
         "-o",
-        "${workspaceFolder}\\build\\release\\${fileBasenameNoExtension}.exe",
+        "${workspaceFolder}\\build\\release\\app.exe",
         "-I",
         "${workspaceFolder}\\include",
         "-I",
@@ -54,15 +57,18 @@
         "-l",
         "wxmsw32u_core",
         "-l",
-        "wxbase32u"
+        "wxbase32u",
+        // run app in release mode
+        "&&",
+        "${workspaceFolder}\\build\\release\\app.exe"
       ],
       "options": {
         "cwd": "${fileDirname}"
       },
       "problemMatcher": ["$gcc"],
       "group": {
-        "kind": "build",
-        "isDefault": true
+        "kind": "build"
+        // "isDefault": true
       },
       "detail": "compiler: \"C:\\Program Files (x86)\\mingw-w64\\i686-8.1.0-posix-dwarf-rt_v6-rev0\\mingw32\\bin\\g++.exe\""
     }
