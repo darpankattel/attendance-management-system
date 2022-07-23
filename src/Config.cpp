@@ -8,6 +8,8 @@
 
 std::string appName = "PresentSir";
 std::string appNameFull = "PresentSir - 3Qu-Bits";
+wxString* teacherFullname = new wxString("");
+wxString* teacherImage = new wxString("");
 
 wxColor* primaryColor = new wxColor(72, 201, 176);
 wxColor* secondaryColor = new wxColor(20, 174, 92);

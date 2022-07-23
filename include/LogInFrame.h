@@ -10,6 +10,7 @@ class LogInFrame: public wxFrame
 {
     public:
     LogInFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+    void onLogInButtonClick(wxMouseEvent& event);
 };
 
 #endif // LOGINFRAME_H

@@ -4,6 +4,8 @@
 
 extern std::string appName;
 extern std::string appNameFull;
+extern wxString* teacherFullname;
+extern wxString* teacherImage;
 
 extern wxColor* primaryColor;
 extern wxColor* secondaryColor;

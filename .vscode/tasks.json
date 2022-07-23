@@ -17,13 +17,15 @@
         "C:\\Program Files (x86)\\wxWidgets\\include",
         "-I",
         "C:\\Program Files (x86)\\wxWidgets\\lib\\gcc_dll\\mswud",
+        "-I",
+        "C:\\Program Files (x86)\\sqlite",
         "-L",
         "C:\\Program Files (x86)\\wxWidgets\\lib\\gcc_dll",
         "-l",
         "wxmsw32ud_core",
         "-l",
         "wxbase32ud",
-        // run app in debug mode
+        "C:\\Program Files (x86)\\sqlite\\sqlite3.dll",
         "&&",
         "${workspaceFolder}\\build\\debug\\app.exe"
       ],

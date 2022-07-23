@@ -5,22 +5,19 @@
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
 #endif
+#include <ImageView.h>
 
-class ImageUploadView: public wxBitmap, public wxWindow
+class ImageUploadView: public ImageView
 {
-    private:
+    protected:
     wxString title;
-    wxPoint pos;
-    wxSize size;
     wxString tooltipText;
-    wxString imagePath;
-    wxString defaultImage;
     
     public:
-    wxStaticBitmap *defaultWxStaticBitmap;
     ImageUploadView(wxWindow *parent, wxString title, wxPoint pos, wxSize size, wxString& defaultImage, wxBitmapType type, wxString tooltip);
-    // methods for boxSizer
     void setSizerCustom(wxBoxSizer *boxSizer, double proportion, int flag, int border);
+    void SetSizeCustom(wxSize size);
+    void OnClick(wxMouseEvent& event);
 };
 
 #endif

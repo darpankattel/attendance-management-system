@@ -14,8 +14,8 @@ ImageView::ImageView(wxWindow *parent, wxPoint pos, wxSize size, wxString& defau
 
     wxImage *defaultWxImage = new wxImage(defaultImage, type);
     wxBitmap *defaultWxBitmap = new wxBitmap(*defaultWxImage);
-    defaultWxBitmap->Rescale(*defaultWxBitmap, wxSize(100, 271/3));
-    defaultWxStaticBitmap = new wxStaticBitmap(parent, wxID_ANY, *defaultWxBitmap, wxPoint(0, 0), wxSize(100, 271/3));
+    defaultWxBitmap->Rescale(*defaultWxBitmap, size);
+    defaultWxStaticBitmap = new wxStaticBitmap(parent, wxID_ANY, *defaultWxBitmap, wxPoint(0, 0), size);
 }
 void ImageView::setSizerCustom(wxBoxSizer *boxSizer, double proportion = 0, int flag = 0, int border = 0)
 {
@@ -24,4 +24,17 @@ void ImageView::setSizerCustom(wxBoxSizer *boxSizer, double proportion = 0, int 
 void ImageView::SetBackgroundColor(wxColour color)
 {
     this->defaultWxStaticBitmap->SetBackgroundColour(color);
+}
+void ImageView::SetSizeCustom(wxSize size)
+{
+    this->size = size;
+    this->defaultWxStaticBitmap->SetSize(size);
+}
+void ImageView::ChangeImage(wxString imagePath)
+{
+    this->imagePath = imagePath;
+    wxImage *defaultWxImage = new wxImage(imagePath);
+    wxBitmap *defaultWxBitmap = new wxBitmap(*defaultWxImage);
+    defaultWxBitmap->Rescale(*defaultWxBitmap, this->size);
+    this->defaultWxStaticBitmap->SetBitmap(*defaultWxBitmap);
 }
