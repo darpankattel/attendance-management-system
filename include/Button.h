@@ -13,8 +13,11 @@ class Button: public wxButton
         void OnClick(wxMouseEvent& event);
         void OnMouseEnter(wxMouseEvent& event);
         void OnMouseLeave(wxMouseEvent& event);
+        void ShowYourWindow();
+        void setControllingWindow(wxScrolledWindow *window);
     private:
         bool isActive;
+        wxScrolledWindow *controllingWindow;
 };
 
 #endif

@@ -48,29 +48,13 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     wxPanel *topStatusBar = new wxPanel(contentPanel, wxID_ANY, wxDefaultPosition, wxSize(700, 60));
     topStatusBar->SetBackgroundColour(*primaryGrey);
 
-    // wxPanel *mainContentPanel = new wxPanel(contentPanel, wxID_ANY, wxDefaultPosition, wxSize(700, 600));
 
-    Query *query = new Query(myDocRootPathDb);
-    wxString sql = "SELECT * FROM students";
-    sqlite3_stmt* stmt = query->execute(sql);
-    int rows = query->length(stmt);
-
-    wxScrolledWindow *mainContentPanel = new wxScrolledWindow(contentPanel, wxID_ANY, wxDefaultPosition, wxSize(680, rows*85+20));
-    mainContentPanel->SetScrollbars(10, 10, 1, 1);
-
-    Student *studentPanel = new Student(mainContentPanel, wxID_ANY, wxDefaultPosition, wxSize(680, rows*85+20), query, stmt);
-
-
+    wxScrolledWindow *mainContentPanel = new wxScrolledWindow(contentPanel, wxID_ANY, wxDefaultPosition, wxSize(680, 600));
     //sizer
     wxBoxSizer* contentSizer = new wxBoxSizer(wxVERTICAL);
     contentSizer->Add(topStatusBar, 0, wxEXPAND);
     contentSizer->Add(mainContentPanel, 1, wxEXPAND);
     contentPanel->SetSizer(contentSizer);
-
-
-    wxBoxSizer* mainContentSizer = new wxBoxSizer(wxVERTICAL);
-    mainContentSizer->Add(studentPanel, 1, wxEXPAND);
-    mainContentPanel->SetSizer(mainContentSizer);
 
     
     this->SetBackgroundColour(wxColour(255, 255, 255));
@@ -87,9 +71,14 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     // nav buttons
     Button *homeButton = new Button(navButtonContainer, wxWindowID(12), wxString("Home"), wxPoint(0, 0), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/home-inverted.png"));
     homeButton->SetBackgroundColour(*primaryColor);
+    homeButton->setControllingWindow(mainContentPanel);
+    homeButton->ShowYourWindow();
     Button *classButton = new Button(navButtonContainer, wxWindowID(13), wxString("Classes"), wxPoint(0, 40), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/class-inverted.png"));
+    classButton->setControllingWindow(mainContentPanel);
     Button *settingsButton = new Button(navButtonContainer, wxWindowID(14), wxString("Settings"), wxPoint(0, 80), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/settings-inverted.png"));
+    settingsButton->setControllingWindow(mainContentPanel);
     Button *aboutButton = new Button(navButtonContainer, wxWindowID(15), wxString("About"), wxPoint(0, 120), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/about-inverted.png"));
+    aboutButton->setControllingWindow(mainContentPanel);
     
 
     // bottom

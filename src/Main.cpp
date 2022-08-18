@@ -10,6 +10,7 @@
 #include <fstream>
 #include <wx/stdpaths.h>
 #include <CreateForm.h>
+#include <About.h>
 extern std::string appNameFull;
 extern std::string appName;
 extern wxString* teacherFullname;
@@ -101,9 +102,13 @@ bool App::OnInit()
         sqlite3_finalize(stmt);
         sqlite3_close(db);
 
-        MainFrame *mainFrame = new MainFrame( appNameFull, wxDefaultPosition, wxDefaultSize );
-        mainFrame->SetIcon( wxIcon(wxT("resources/images/ams-logo-small.png")) );
-        mainFrame->Show( true );
+        // MainFrame *mainFrame = new MainFrame( appNameFull, wxDefaultPosition, wxDefaultSize );
+        // mainFrame->SetIcon( wxIcon(wxT("resources/images/ams-logo-small.png")) );
+        // mainFrame->Show( true );
+
+        About *aboutFrame = new About(NULL, wxID_ANY, wxDefaultPosition, wxSize(700, 600));
+        aboutFrame->SetIcon( wxIcon(wxT("resources/images/ams-logo-small.png")) );
+        aboutFrame->Show( true );
         
         // wxString StudentTitle = appName+" - Create Student";
         // CreateForm *CreateStudentForm = new CreateForm(NULL, wxDefaultPosition, wxSize(400, 500), StudentTitle, *defaultStudentImage, wxBITMAP_TYPE_PNG);
