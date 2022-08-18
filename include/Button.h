@@ -9,11 +9,12 @@
 class Button: public wxButton
 {
     public:
-        Button(wxWindow *parent, wxWindowID id, const wxString &label=wxEmptyString, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0);
+        Button(wxWindow *parent, wxWindowID id, const wxString &label=wxEmptyString, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, wxString bitmapPath = wxEmptyString);
         void OnClick(wxMouseEvent& event);
         void OnMouseEnter(wxMouseEvent& event);
         void OnMouseLeave(wxMouseEvent& event);
     private:
+        bool isActive;
 };
 
 #endif

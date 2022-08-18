@@ -5,6 +5,9 @@
 #include <Student.h>
 #include <Query.h>
 #include <Button.h>
+#include <wx/treectrl.h>
+
+
 extern wxColor *primaryBlack;
 extern wxColor *primaryWhite;
 extern wxColor *primaryGrey;
@@ -82,12 +85,12 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     wxPanel *navButtonContainer = new wxPanel(navPanel, wxID_ANY, wxDefaultPosition, wxSize(200, 500));
     
     // nav buttons
-    Button *homeButton = new Button(navButtonContainer, wxID_ANY, wxString("Home"), wxPoint(0, 0), wxSize(200, 40));
-    Button *profileButton = new Button(navButtonContainer, wxID_ANY, wxString("Classes"), wxPoint(0, 40), wxSize(200, 40));
-    Button *settingsButton = new Button(navButtonContainer, wxID_ANY, wxString("Settings"), wxPoint(0, 80), wxSize(200, 40));
-    Button *logOutButton = new Button(navButtonContainer, wxID_ANY, wxString("About"), wxPoint(0, 120), wxSize(200, 40));
+    Button *homeButton = new Button(navButtonContainer, wxWindowID(12), wxString("Home"), wxPoint(0, 0), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/home-inverted.png"));
+    homeButton->SetBackgroundColour(*primaryColor);
+    Button *classButton = new Button(navButtonContainer, wxWindowID(13), wxString("Classes"), wxPoint(0, 40), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/class-inverted.png"));
+    Button *settingsButton = new Button(navButtonContainer, wxWindowID(14), wxString("Settings"), wxPoint(0, 80), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/settings-inverted.png"));
+    Button *aboutButton = new Button(navButtonContainer, wxWindowID(15), wxString("About"), wxPoint(0, 120), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/about-inverted.png"));
     
-
 
     // bottom
     wxPanel *navBottomContainer = new wxPanel(navPanel, wxID_ANY, wxDefaultPosition, wxSize(200, 60));
