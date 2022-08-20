@@ -2,11 +2,14 @@
 #include <ImageView.h>
 #include <wx/tglbtn.h>
 #include <StudentObject.h>
+#include <Config.h>
+extern wxColor* primaryColor;
+extern wxColor* primaryWhite;
 
 StudentView::StudentView(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wxSize& size, StudentObject* studentObject) : wxPanel(parent, id, pos, size)
 {
     wxString defaultImage = "resources/images/student-circled.png";
-    this->wxPanel::SetBackgroundColour(wxColor(255, 255, 225));
+    this->wxPanel::SetBackgroundColour(wxColor(255, 255, 255));
 
     wxPanel* buttonContainer = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(100, 100));
     // buttonContainer->SetBackgroundColour(wxColor(0, 0, 255));
@@ -45,7 +48,8 @@ StudentView::StudentView(wxWindow *parent, wxWindowID id, const wxPoint& pos, co
     // toggle button
     wxToggleButton *toggleButton = new wxToggleButton(buttonContainer, wxID_ANY, "Mark Present", wxPoint(0, 25), wxSize(100, 30));
     toggleButton->SetValue(false);
-    toggleButton->SetBackgroundColour(wxColor(0, 255, 0));
+    toggleButton->SetBackgroundColour(*primaryColor);
+    toggleButton->SetForegroundColour(*primaryWhite);
     toggleButton->SetCursor(wxCURSOR_HAND);
     toggleButton->Bind(wxEVT_TOGGLEBUTTON, &StudentView::onToggleButtonClick, this);
 
@@ -78,12 +82,10 @@ void StudentView::onToggleButtonClick(wxCommandEvent& event)
     {
         toggleButton->SetBackgroundColour(wxColor(255, 0, 0));
         toggleButton->SetLabel("Mark Absent");
-        toggleButton->SetForegroundColour(wxColor(255, 255, 255));
     }
     else
     {
-        toggleButton->SetBackgroundColour(wxColor(0, 255, 0));
+        toggleButton->SetBackgroundColour(*primaryColor);
         toggleButton->SetLabel("Mark Present");
-        toggleButton->SetForegroundColour(wxColor(0, 0, 0));
     }
 }

@@ -34,6 +34,7 @@ void Query::query(wxString sql)
 
 sqlite3_stmt* Query::execute(wxString sql)
 {
+    std::cout << "Executing query: " << sql << std::endl;
     char *zErrMsg = 0;
     sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(this->db, sql.ToStdString().c_str(), -1, &stmt, NULL);
@@ -43,6 +44,7 @@ sqlite3_stmt* Query::execute(wxString sql)
         sqlite3_free(zErrMsg);
         return NULL;
     }
+    std::cout << "SQL executed successfully..." << std::endl;
     return stmt;
 }
 

@@ -5,7 +5,7 @@
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
 #endif
-
+#include <TopStatusBar.h>
 class Button: public wxButton
 {
     public:
@@ -15,9 +15,11 @@ class Button: public wxButton
         void OnMouseLeave(wxMouseEvent& event);
         void ShowYourWindow();
         void setControllingWindow(wxScrolledWindow *window);
+        void setTopStatusBar(TopStatusBar *statusBar);
     private:
-        bool isActive;
         wxScrolledWindow *controllingWindow;
+        wxWindowID id;
+        TopStatusBar *topStatusBar;
 };
 
 #endif

@@ -7,8 +7,12 @@ extern std::string appNameFull;
 extern wxString* teacherFullname;
 extern wxString* teacherImage;
 
+extern wxString widgetBgClass;
+extern wxString widgetBgStudent;
+
 extern wxColor* primaryColor;
 extern wxColor* secondaryColor;
+extern wxColor* tertiaryColor;
 
 extern wxColor* primaryBlack;
 extern wxColor* primaryWhite;
@@ -19,6 +23,7 @@ extern wxString* mediumLogo;
 extern wxString* largeLogo;
 
 extern wxString* defaultUserImage;
+extern wxString* defaultClassImage;
 
 extern wxString* logInContainerLeftText;
 

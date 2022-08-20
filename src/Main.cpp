@@ -9,13 +9,15 @@
 #include <Config.h>
 #include <fstream>
 #include <wx/stdpaths.h>
-#include <CreateForm.h>
+#include <CreateStudentForm.h>
+#include <CreateClassForm.h>
 #include <About.h>
 extern std::string appNameFull;
 extern std::string appName;
 extern wxString* teacherFullname;
 extern wxString* teacherImage;
 extern wxString* defaultStudentImage;
+extern wxString* defaultClassImage;
 
 extern wxString myDocRoot;
 extern wxString myDocRootPath;
@@ -102,19 +104,19 @@ bool App::OnInit()
         sqlite3_finalize(stmt);
         sqlite3_close(db);
 
-        // MainFrame *mainFrame = new MainFrame( appNameFull, wxDefaultPosition, wxDefaultSize );
-        // mainFrame->SetIcon( wxIcon(wxT("resources/images/ams-logo-small.png")) );
-        // mainFrame->Show( true );
-
-        About *aboutFrame = new About(NULL, wxID_ANY, wxDefaultPosition, wxSize(700, 600));
-        aboutFrame->SetIcon( wxIcon(wxT("resources/images/ams-logo-small.png")) );
-        aboutFrame->Show( true );
+        MainFrame *mainFrame = new MainFrame( appNameFull, wxDefaultPosition, wxDefaultSize );
+        mainFrame->wxFrame::SetIcon(wxIcon(wxT("resources/images/ams-logo-small.png")));
+        mainFrame->Show( true );
         
         // wxString StudentTitle = appName+" - Create Student";
-        // CreateForm *CreateStudentForm = new CreateForm(NULL, wxDefaultPosition, wxSize(400, 500), StudentTitle, *defaultStudentImage, wxBITMAP_TYPE_PNG);
-        // // disable maximize button
-        // CreateStudentForm->Maximize(false);
-        // CreateStudentForm->Show(true);
+        // CreateStudentForm *createStudentForm = new CreateStudentForm(NULL, wxDefaultPosition, wxSize(400, 500), StudentTitle, *defaultStudentImage, wxBITMAP_TYPE_PNG);
+        // createStudentForm->Maximize(false);
+        // createStudentForm->Show(true);
+
+        // wxString ClassTitle = appName+" - Create Class";
+        // CreateClassForm *createClassForm = new CreateClassForm(NULL, wxDefaultPosition, wxSize(400, 400), ClassTitle, *defaultClassImage, wxBITMAP_TYPE_PNG);
+        // createClassForm->Maximize(false);
+        // createClassForm->Show(true);
 
         return true;
     }

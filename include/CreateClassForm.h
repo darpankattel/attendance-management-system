@@ -1,12 +1,12 @@
-#ifndef CREATEFORM_H
-#define CREATEFORM_H
+#ifndef CREATECLASSFORM_H
+#define CREATECLASSFORM_H
 
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
 #endif
 
-class CreateForm: public wxFrame
+class CreateClassForm: public wxFrame
 {
     protected:
     wxPoint pos;
@@ -17,7 +17,7 @@ class CreateForm: public wxFrame
     
     public:
     wxStaticBitmap *defaultWxStaticBitmap;
-    CreateForm(wxWindow *parent, wxPoint pos, wxSize size, wxString &title, wxString &defaultImage, wxBitmapType type);
+    CreateClassForm(wxWindow *parent, wxPoint pos, wxSize size, wxString &title, wxString &defaultImage, wxBitmapType type);
     void setSizerCustom(wxBoxSizer *boxSizer, double proportion, int flag, int border);
     void SetBackgroundColor(wxColour color);
     void SetSizeCustom(wxSize size);

@@ -16,7 +16,7 @@ ImageView::ImageView(wxWindow *parent, wxPoint pos, wxSize size, wxString &defau
     wxBitmap *defaultWxBitmap = new wxBitmap(*defaultWxImage);
     defaultWxBitmap->Rescale(*defaultWxBitmap, size);
     // rounded image corners
-    defaultWxStaticBitmap = new wxStaticBitmap(parent, wxID_ANY, *defaultWxBitmap, wxPoint(0, 0), size);
+    defaultWxStaticBitmap = new wxStaticBitmap(parent, wxID_ANY, *defaultWxBitmap, pos, size);
 }
 void ImageView::setSizerCustom(wxBoxSizer *boxSizer, double proportion = 0, int flag = 0, int border = 0)
 {

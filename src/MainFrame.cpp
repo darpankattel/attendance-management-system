@@ -5,14 +5,18 @@
 #include <Student.h>
 #include <Query.h>
 #include <Button.h>
+#include <TopStatusBar.h>
 #include <wx/treectrl.h>
 
 
 extern wxColor *primaryBlack;
 extern wxColor *primaryWhite;
 extern wxColor *primaryGrey;
+extern wxColor *tertiaryColor;
+
 extern std::string appName;
 extern wxString* defaultUserImage;
+extern wxString* newLogo;
 
 extern wxString myDocRoot;
 extern wxString myDocRootPath;
@@ -40,31 +44,41 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     CreateStatusBar();
     SetStatusText("This is a status bar");
     // create a panel
-    wxPanel *mainContainer = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(900, 600));
+    wxPanel *mainContainer = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(900, 680));
 
     wxPanel *navPanel = new wxPanel(mainContainer, wxID_ANY, wxDefaultPosition, wxSize(200, 600));
     wxPanel *contentPanel = new wxPanel(mainContainer, wxID_ANY, wxDefaultPosition, wxSize(700, 600));
 
-    wxPanel *topStatusBar = new wxPanel(contentPanel, wxID_ANY, wxDefaultPosition, wxSize(700, 60));
-    topStatusBar->SetBackgroundColour(*primaryGrey);
+    TopStatusBar *topStatusBar = new TopStatusBar(contentPanel, wxID_ANY, wxDefaultPosition, wxSize(700, 80));
+    topStatusBar->wxPanel::SetBackgroundColour(*primaryWhite);
 
 
     wxScrolledWindow *mainContentPanel = new wxScrolledWindow(contentPanel, wxID_ANY, wxDefaultPosition, wxSize(680, 600));
+    mainContentPanel -> SetBackgroundColour(wxColor(240, 240, 240));
     //sizer
     wxBoxSizer* contentSizer = new wxBoxSizer(wxVERTICAL);
     contentSizer->Add(topStatusBar, 0, wxEXPAND);
-    contentSizer->Add(mainContentPanel, 1, wxEXPAND);
+    contentSizer->Add(mainContentPanel, 1, wxEXPAND | wxTOP, 10);
     contentPanel->SetSizer(contentSizer);
 
     
-    this->SetBackgroundColour(wxColour(255, 255, 255));
-    navPanel->SetBackgroundColour(*primaryBlack);
-    contentPanel->SetBackgroundColour(wxColour(255, 98, 29));
+    this->SetBackgroundColour(wxColour(240, 240, 240));
+    navPanel->SetBackgroundColour(*primaryColor);
 
-    wxStaticText *navAppText = new wxStaticText(navPanel, wxID_ANY, wxString(appName), wxDefaultPosition, wxSize(200, 40), wxALIGN_CENTER, wxString("Arial"));
-    // navAppText->SetBackgroundColour(wxColour(0, 255, 255));
-    navAppText->SetForegroundColour(wxColour(255, 255, 255));
+    wxPanel *navAppTextPanel = new wxPanel(navPanel, wxID_ANY, wxPoint(0, 50), wxSize(200, 80));
+    navAppTextPanel->SetBackgroundColour(*tertiaryColor);
+
+    ImageView *navAppLogo = new ImageView(navAppTextPanel, wxPoint(0, 0), wxSize(40, 40), *newLogo, wxBITMAP_TYPE_PNG);
+
+    wxStaticText *navAppText = new wxStaticText(navAppTextPanel, wxID_ANY, wxString(appName), wxPoint(10, 45), wxSize(200, 30), wxALIGN_CENTER, wxString("Arial"));
+    navAppText->SetForegroundColour(*primaryWhite);
     navAppText->SetFont(wxFont(16, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_MAX, wxFONTWEIGHT_BOLD));
+
+    wxBoxSizer *navAppTextSizer = new wxBoxSizer(wxVERTICAL);
+    navAppLogo->setSizerCustom(navAppTextSizer, 1, wxEXPAND | wxTOP, 5);
+    navAppTextSizer->Add(navAppText, 1, wxEXPAND | wxTOP | wxBOTTOM, 5);
+    navAppTextPanel->SetSizer(navAppTextSizer);
+
     
     wxPanel *navButtonContainer = new wxPanel(navPanel, wxID_ANY, wxDefaultPosition, wxSize(200, 500));
     
@@ -72,18 +86,25 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     Button *homeButton = new Button(navButtonContainer, wxWindowID(12), wxString("Home"), wxPoint(0, 0), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/home-inverted.png"));
     homeButton->SetBackgroundColour(*primaryColor);
     homeButton->setControllingWindow(mainContentPanel);
+    homeButton->setTopStatusBar(topStatusBar);
     homeButton->ShowYourWindow();
+
     Button *classButton = new Button(navButtonContainer, wxWindowID(13), wxString("Classes"), wxPoint(0, 40), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/class-inverted.png"));
     classButton->setControllingWindow(mainContentPanel);
+    classButton->setTopStatusBar(topStatusBar);
+
     Button *settingsButton = new Button(navButtonContainer, wxWindowID(14), wxString("Settings"), wxPoint(0, 80), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/settings-inverted.png"));
     settingsButton->setControllingWindow(mainContentPanel);
+    settingsButton->setTopStatusBar(topStatusBar);
+
     Button *aboutButton = new Button(navButtonContainer, wxWindowID(15), wxString("About"), wxPoint(0, 120), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/about-inverted.png"));
     aboutButton->setControllingWindow(mainContentPanel);
+    aboutButton->setTopStatusBar(topStatusBar);
     
 
     // bottom
     wxPanel *navBottomContainer = new wxPanel(navPanel, wxID_ANY, wxDefaultPosition, wxSize(200, 60));
-    navBottomContainer->SetBackgroundColour(*primaryGrey);
+    navBottomContainer->SetBackgroundColour(*tertiaryColor);
 
 
     wxPanel *navBottomLeftContainer = new wxPanel(navBottomContainer, wxID_ANY, wxPoint(0, 10), wxSize(50, 60));
@@ -121,20 +142,18 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     }
 
     ImageView *navBottomLeftImageView = new ImageView(navBottomLeftContainer, wxDefaultPosition, wxSize(40, 40), teacherImage, wxBITMAP_TYPE_ANY);
-    navBottomLeftImageView->SetBackgroundColor(*primaryGrey);
+    navBottomLeftImageView->SetBackgroundColor(*tertiaryColor);
 
     wxPanel *navBottomRightContainer = new wxPanel(navBottomContainer, wxID_ANY, wxPoint(0, 10), wxSize(150, 60));
 
-    
-
     wxStaticText *navBottomTeacherName = new wxStaticText(navBottomRightContainer, wxID_ANY, wxString(teacherName), wxPoint(0, 0), wxSize(200, 20), wxALIGN_LEFT, wxString("Arial"));
-    navBottomTeacherName->SetBackgroundColour(*primaryGrey);
-    navBottomTeacherName->SetForegroundColour(*primaryBlack);
+    navBottomTeacherName->SetBackgroundColour(*tertiaryColor);
+    navBottomTeacherName->SetForegroundColour(*primaryWhite);
     navBottomTeacherName->SetFont(wxFont(14, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_SEMIBOLD));
 
     wxStaticText *navBottomTeacherPost = new wxStaticText(navBottomRightContainer, wxID_ANY, wxString("Teacher"), wxPoint(0, 20), wxSize(200, 20), wxALIGN_LEFT, wxString("Arial"));
-    navBottomTeacherPost->SetBackgroundColour(*primaryGrey);
-    navBottomTeacherPost->SetForegroundColour(*primaryBlack);
+    navBottomTeacherPost->SetBackgroundColour(*tertiaryColor);
+    navBottomTeacherPost->SetForegroundColour(*primaryWhite);
     navBottomTeacherPost->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_MAX, wxFONTWEIGHT_NORMAL));
 
     // sizer
@@ -154,7 +173,7 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     mainContainer->SetSizer(mainSizer);
 
     wxBoxSizer *navSizer = new wxBoxSizer(wxVERTICAL);
-    navSizer->Add(navAppText, 0, wxEXPAND | wxTOP, 15);
+    navSizer->Add(navAppTextPanel, 0, wxEXPAND);
     navSizer->Add(navButtonContainer, 1, wxEXPAND | wxBOTTOM, 10);
     navSizer->Add(navBottomContainer, 0, wxEXPAND);
     navPanel->SetSizer(navSizer);
