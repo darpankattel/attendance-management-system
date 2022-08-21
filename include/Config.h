@@ -23,6 +23,7 @@ extern wxString* mediumLogo;
 extern wxString* largeLogo;
 
 extern wxString* defaultUserImage;
+extern wxString* defaultStudentImage;
 extern wxString* defaultClassImage;
 
 extern wxString* logInContainerLeftText;

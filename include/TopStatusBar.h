@@ -8,7 +8,7 @@
 
 class TopStatusBar: public wxPanel
 {
-    private:
+    public:
     wxStaticText *statusBarTitle;
     wxButton *actionButton2;
     wxButton *actionButton3;
@@ -17,7 +17,7 @@ class TopStatusBar: public wxPanel
     wxStaticText *rightLabelTitle;
     wxStaticText *rightLabelValue;
     wxButton *addButton;
-    public:
+    wxString statusBarFor;
         TopStatusBar(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wxSize& size);
         void setTitle(wxString);
         void setFirstLabelTitle(wxString);
@@ -28,6 +28,8 @@ class TopStatusBar: public wxPanel
         void hideActionButton3();
         void showActionButton2();
         void showActionButton3();
+        void setStatusBarFor(wxString);
+        void onAddButtonClick(wxCommandEvent& event);
 };
 
 #endif

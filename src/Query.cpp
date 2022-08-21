@@ -51,13 +51,16 @@ sqlite3_stmt* Query::execute(wxString sql)
 int Query::length(sqlite3_stmt *stmt)
 {
     // return the number of rows in the result set
+    std::cout<<"Calculating length of result set..."<<std::endl;
     int count = 0;
     while (sqlite3_step(stmt) == SQLITE_ROW)
     {
         count++;
     }
     // reset the statement to the first row
+    std::cout<<"Resetting statement..."<<std::endl;
     sqlite3_reset(stmt);
+    std::cout<<"Returning"<<std::endl;
     return count;
 }
 

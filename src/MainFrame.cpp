@@ -100,12 +100,21 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     Button *aboutButton = new Button(navButtonContainer, wxWindowID(15), wxString("About"), wxPoint(0, 120), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/about-inverted.png"));
     aboutButton->setControllingWindow(mainContentPanel);
     aboutButton->setTopStatusBar(topStatusBar);
+
     
 
     // bottom
-    wxPanel *navBottomContainer = new wxPanel(navPanel, wxID_ANY, wxDefaultPosition, wxSize(200, 60));
+    wxPanel *navPanelBottom = new wxPanel(navPanel, wxID_ANY, wxDefaultPosition, wxSize(200, 100));
+
+    Button *logoutButton = new Button(navPanelBottom, wxWindowID(16), wxString("Logout"), wxPoint(0, 250), wxSize(200, 40), wxALIGN_LEFT, wxString("resources/images/logout-inverted.png"));
+
+    wxPanel *navBottomContainer = new wxPanel(navPanelBottom, wxID_ANY, wxDefaultPosition, wxSize(200, 60));
     navBottomContainer->SetBackgroundColour(*tertiaryColor);
 
+    wxBoxSizer *navPanelBottomSizer = new wxBoxSizer(wxVERTICAL);
+    navPanelBottomSizer->Add(logoutButton, 0, wxEXPAND);
+    navPanelBottomSizer->Add(navBottomContainer, 1, wxEXPAND);
+    navPanelBottom->SetSizer(navPanelBottomSizer);
 
     wxPanel *navBottomLeftContainer = new wxPanel(navBottomContainer, wxID_ANY, wxPoint(0, 10), wxSize(50, 60));
 
@@ -175,7 +184,8 @@ MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &si
     wxBoxSizer *navSizer = new wxBoxSizer(wxVERTICAL);
     navSizer->Add(navAppTextPanel, 0, wxEXPAND);
     navSizer->Add(navButtonContainer, 1, wxEXPAND | wxBOTTOM, 10);
-    navSizer->Add(navBottomContainer, 0, wxEXPAND);
+    navSizer->Add(navPanelBottom, 0, wxEXPAND);
+    // navSizer->Add(navBottomContainer, 0, wxEXPAND);
     navPanel->SetSizer(navSizer);
     // sizer->Add(navPanel, 1, wxEXPAND | wxALL, 10);
     this->SetSizerAndFit(sizer);

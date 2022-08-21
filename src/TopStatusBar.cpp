@@ -1,7 +1,11 @@
 #include <TopStatusBar.h>
 #include <Config.h>
+#include <CreateStudentForm.h>
+#include <CreateClassForm.h>
 extern wxColor* primaryWhite;
 extern wxColor* primaryBlack;
+extern wxString* defaultStudentImage;
+extern wxString* defaultClassImage;
 
 TopStatusBar::TopStatusBar(wxWindow *parent, wxWindowID id, const wxPoint& pos, const wxSize& size)
 : wxPanel(parent, id, pos, size)
@@ -22,6 +26,7 @@ TopStatusBar::TopStatusBar(wxWindow *parent, wxWindowID id, const wxPoint& pos, 
     statusBarTitle = new wxStaticText(titleStatusPanel, wxID_ANY, "Home", wxPoint(10, 10));
     statusBarTitle->SetFont(wxFont(20, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
     statusBarTitle->SetForegroundColour(*primaryBlack);
+    statusBarTitle->SetWindowStyle(wxBORDER_NONE);
 
     // wxButton *actionButton = new wxButton(titleStatusPanel,wxID_ANY,"Action 1",wxPoint(5,35),wxDefaultSize);
     // actionButton -> SetBackgroundColour(*primaryWhite);
@@ -42,7 +47,7 @@ TopStatusBar::TopStatusBar(wxWindow *parent, wxWindowID id, const wxPoint& pos, 
     actionButton2 -> SetWindowStyle(wxBORDER_NONE);
 
     actionButton3 = new wxButton(controlsStatusPanel,wxID_ANY,"Mark Everyone Absent");
-    actionButton3 -> SetBackgroundColour(*primaryColor);
+    actionButton3 -> SetBackgroundColour(wxColor(255, 0, 0));
     actionButton3 -> SetForegroundColour(*primaryWhite);
     // actionButton -> SetFont(wxFont(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxF));
     actionButton3 -> SetCursor(wxCURSOR_HAND);
@@ -100,6 +105,7 @@ TopStatusBar::TopStatusBar(wxWindow *parent, wxWindowID id, const wxPoint& pos, 
     addButton->SetBitmapMargins(wxSize(0, 0));
     addButton->SetBackgroundColour(*primaryWhite);
     // addButton->SetBitmapPosition(wxDirection::wxLEFT);
+    addButton->Bind(wxEVT_BUTTON, &TopStatusBar::onAddButtonClick, this);
 
     wxBoxSizer *leftStatusPanelSizer = new wxBoxSizer(wxHORIZONTAL);
     leftStatusPanelSizer->Add(titleStatusPanel, 0, wxEXPAND | wxALL, 0);
@@ -115,19 +121,31 @@ TopStatusBar::TopStatusBar(wxWindow *parent, wxWindowID id, const wxPoint& pos, 
 
 }
 void TopStatusBar::setTitle(wxString title){
+    std::cout<<"Inside setTitle"<< title << std::endl;
     statusBarTitle -> SetLabel(title);
+    statusBarTitle->Refresh();
+    statusBarTitle->Update();
+    std::cout<<"Returning from setTitle"<<std::endl;
 }
 void TopStatusBar::setFirstLabelTitle(wxString title){
+    std::cout<<"Inside setFirstLabelTitle"<<std::endl;
     leftLabelTitle -> SetLabel(title);
+    std::cout<<"Returning from setFirstLabelTitle"<<std::endl;
 }
 void TopStatusBar::setFirstLabelValue(wxString value){
+    std::cout<<"Inside setFirstLabelValue"<<std::endl;
     leftLabelValue -> SetLabel(value);
+    std::cout<<"Returning from setFirstLabelValue"<<std::endl;
 }
 void TopStatusBar::setSecondLabelTitle(wxString title){
+    std::cout<<"Inside setSecondLabelTitle"<<std::endl;
     rightLabelTitle -> SetLabel(title);
+    std::cout<<"Returning from setSecondLabelTitle"<<std::endl;
 }
 void TopStatusBar::setSecondLabelValue(wxString value){
+    std::cout<<"Inside setSecondLabelValue"<<std::endl;
     rightLabelValue -> SetLabel(value);
+    std::cout<<"Returning from setSecondLabelValue"<<std::endl;
 }
 
 void TopStatusBar::hideActionButton2(){
@@ -142,4 +160,23 @@ void TopStatusBar::showActionButton2(){
 }
 void TopStatusBar::showActionButton3(){
     actionButton3 -> Show();
+}
+
+void TopStatusBar::setStatusBarFor(wxString statusBarFor){
+    this -> statusBarFor = statusBarFor;
+}
+
+void TopStatusBar::onAddButtonClick(wxCommandEvent& event)
+{
+    if (statusBarFor == "class"){
+        wxString ClassTitle = appName+" - Create Class";
+        CreateClassForm *createClassForm = new CreateClassForm(NULL, wxDefaultPosition, wxSize(400, 400), ClassTitle, *defaultClassImage, wxBITMAP_TYPE_PNG);
+        createClassForm->Maximize(false);
+        createClassForm->Show(true);
+    } else {
+        wxString StudentTitle = appName+" - Create Student";
+        CreateStudentForm *createStudentForm = new CreateStudentForm(NULL, wxDefaultPosition, wxSize(400, 500), StudentTitle, *defaultStudentImage, wxBITMAP_TYPE_PNG);
+        createStudentForm->Maximize(false);
+        createStudentForm->Show(true);
+    }
 }

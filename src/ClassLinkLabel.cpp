@@ -27,6 +27,8 @@ ClassLinkLabel::ClassLinkLabel(wxWindow *parent, wxWindowID id, wxString classNa
 
 }
 
+// void giveControl(){}
+
 void ClassLinkLabel::OnClick(wxCommandEvent& event)
 {
     wxString newClassName = this->className;
@@ -37,17 +39,20 @@ void ClassLinkLabel::OnClick(wxCommandEvent& event)
     wxScrolledWindow *window = controllingWindow;
     Query *query = new Query(myDocRootPathDb);
     wxString sql = "SELECT * FROM student WHERE class_id = " + newClassId.ToStdString();
-    // std::cout<<"sql: "<<sql<<std::endl;
+    std::cout<<"sql: "<<sql<<std::endl;
     sqlite3_stmt* stmt = query->execute(sql);
     int rows = query->length(stmt);
-
+    std::cout<<"returned rows: "<<rows<<std::endl;
     window->SetSize(wxSize(680, rows*85+40));
+    std::cout<<"set size [past], configuring topStatusBar"<<std::endl;
+    std::cout<<newClassId<<newClassName<<std::endl;
     
     topStatusBar->setTitle(newClassName);
-    topStatusBar->setFirstLabelTitle("No. of Students");
-    topStatusBar->setFirstLabelValue(std::to_string(rows));
-    topStatusBar->setSecondLabelTitle("Below 70%");
-    topStatusBar->setSecondLabelValue("0");
+    topStatusBar->setFirstLabelTitle(wxString("No. of Students"));
+    topStatusBar->setFirstLabelValue(wxString(std::to_string(rows)));
+    topStatusBar->setSecondLabelTitle(wxString("Below 70%"));
+    topStatusBar->setSecondLabelValue(wxString("0"));
+    std::cout<<"If else approached"<<std::endl;
     if (rows > 0)
     {
         window->SetScrollbars(10, 10, 1, 1);

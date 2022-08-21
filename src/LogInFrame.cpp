@@ -156,7 +156,7 @@ void LogInFrame::onLogInButtonClick(wxMouseEvent& event)
                 MainFrame *mainFrame = new MainFrame( appNameFull, wxDefaultPosition, wxDefaultSize );
                 mainFrame->SetIcon( wxIcon(wxT("resources/images/ams-logo-small.png")) );
                 mainFrame->Show( true );
-                this->Hide();
+                this->Close(true);
             }
         }
     }

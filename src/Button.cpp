@@ -81,6 +81,7 @@ void Button::OnMouseLeave(wxMouseEvent& event)
 void Button::ShowYourWindow()
 {
     if (id == 12) {
+        topStatusBar->setStatusBarFor(wxString("home"));
         wxScrolledWindow *window = controllingWindow;
         Query *query = new Query(myDocRootPathDb);
         wxString sql = "SELECT * FROM student";
@@ -137,6 +138,7 @@ void Button::ShowYourWindow()
     }
     // 13 classes
     else if (id == 13) {
+        topStatusBar->setStatusBarFor(wxString("class"));
         std::cout<<"show classes window"<<std::endl;
         wxScrolledWindow *window = controllingWindow;
 
@@ -189,12 +191,13 @@ void Button::ShowYourWindow()
     }
     // 14 settings
     else if (id == 14) {
+        topStatusBar->setStatusBarFor(wxString("setting"));
         std::cout<<"show settings window"<<std::endl;
         wxScrolledWindow *window = controllingWindow;
         window->SetSize(wxSize(680, 2*85+20));
         window->SetScrollbars(10, 10, 1, 1);
         wxPanel *studentPanel = new wxPanel(window, wxID_ANY, wxDefaultPosition, wxSize(200, 200));
-        studentPanel->SetBackgroundColour(wxColour(0, 255, 0));
+        studentPanel->SetBackgroundColour(*primaryWhite);
         wxBoxSizer* mainContentSizer = new wxBoxSizer(wxVERTICAL);
         mainContentSizer->Add(studentPanel, 1, wxEXPAND);
         window->SetSizer(mainContentSizer);
@@ -210,6 +213,7 @@ void Button::ShowYourWindow()
     }
     // 15 about
     else if (id == 15) {
+        topStatusBar->setStatusBarFor(wxString("about"));
         wxScrolledWindow *window = controllingWindow;
         window->SetSize(wxSize(680, 2*85+20));
         window->SetScrollbars(10, 10, 1, 1);
@@ -287,22 +291,22 @@ void Button::ShowYourWindow()
         ImageView *instagramLogo2 = new ImageView(aboutPanel, wxPoint(250, 500), wxSize(35, 35), instagramImagePath, wxBITMAP_TYPE_PNG);
         ImageView *phoneLogo2 = new ImageView(aboutPanel, wxPoint(250, 550), wxSize(35, 35), phoneImagePath, wxBITMAP_TYPE_PNG);
 
-        ImageView *faceBookLogo3 = new ImageView(aboutPanel, wxPoint(455, 450), wxSize(35, 35), faceBookImagePath, wxBITMAP_TYPE_PNG);
-        ImageView *instagramLogo3 = new ImageView(aboutPanel, wxPoint(455, 500), wxSize(35, 35), instagramImagePath, wxBITMAP_TYPE_PNG);
-        ImageView *phoneLogo3 = new ImageView(aboutPanel, wxPoint(455, 550), wxSize(35, 35), phoneImagePath, wxBITMAP_TYPE_PNG);
+        ImageView *faceBookLogo3 = new ImageView(aboutPanel, wxPoint(475, 450), wxSize(35, 35), faceBookImagePath, wxBITMAP_TYPE_PNG);
+        ImageView *instagramLogo3 = new ImageView(aboutPanel, wxPoint(475, 500), wxSize(35, 35), instagramImagePath, wxBITMAP_TYPE_PNG);
+        ImageView *phoneLogo3 = new ImageView(aboutPanel, wxPoint(475, 550), wxSize(35, 35), phoneImagePath, wxBITMAP_TYPE_PNG);
 
         wxHyperlinkCtrl *facebookLink11 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "darpankattel.com.np", "https://www.darpankattel.com.np/", wxPoint(85, 450), wxDefaultSize);
         wxHyperlinkCtrl *facebookLink21 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "coderslap.com", "https://www.coderslap.com/", wxPoint(85, 470), wxDefaultSize);
         wxHyperlinkCtrl *facebookLink2 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "Bishnu Datt Badu", "https://www.facebook.com/bishnudbadu.143", wxPoint(290, 460), wxDefaultSize);
-        wxHyperlinkCtrl *facebookLink3 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "Vivek Sunar", "https://www.facebook.com/profile.php?id=100011964697970", wxPoint(495, 460), wxDefaultSize);
+        wxHyperlinkCtrl *facebookLink3 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "Vivek Sunar", "https://www.facebook.com/profile.php?id=100011964697970", wxPoint(515, 460), wxDefaultSize);
         
         wxHyperlinkCtrl *instagramLink1 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "Darpan Kattel", "https://www.facebook.com/darpan.kattel", wxPoint(85, 510), wxDefaultSize);
         wxHyperlinkCtrl *instagramLink2 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "Bishnu Datt Badu", "9843761451", wxPoint(290, 510), wxDefaultSize);
-        wxHyperlinkCtrl *instagramLink3 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "Bibek Sunar", "9866564506", wxPoint(495, 510), wxDefaultSize);
+        wxHyperlinkCtrl *instagramLink3 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "Bibek Sunar", "9866564506", wxPoint(515, 510), wxDefaultSize);
 
         wxHyperlinkCtrl *phoneNumber1 = new wxHyperlinkCtrl(aboutPanel, wxID_ANY, "Darpan Kattel", "https://instagram.com/katteldarpan/", wxPoint(85, 560), wxDefaultSize);
         wxStaticText *phoneNumber2 = new wxStaticText(aboutPanel, wxID_ANY, "9843761451", wxPoint(290, 560), wxDefaultSize);
-        wxStaticText *phoneNumber3 = new wxStaticText(aboutPanel, wxID_ANY, "9866564506", wxPoint(495, 560), wxDefaultSize);
+        wxStaticText *phoneNumber3 = new wxStaticText(aboutPanel, wxID_ANY, "9866564506", wxPoint(515, 560), wxDefaultSize);
         
         
         wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
@@ -321,6 +325,19 @@ void Button::ShowYourWindow()
         mainAppWindow->Layout();
         mainAppWindow->Refresh();
         mainAppWindow->Update();
+    } else if (id == 16)
+    {
+        int answer = wxMessageBox("Are you sure to log out?", "Confirm",
+                              wxYES_NO | wxCANCEL, this->GetParent()->GetParent()->GetParent()->GetParent());
+        if (answer == wxYES){
+            // delete teacher record
+            Query *query = new Query(myDocRootPathConfig);
+            query->query(wxString("DELETE FROM teacher"));
+            query->close();
+            delete query;
+            // close app
+            this->GetParent()->GetParent()->GetParent()->GetParent()->Close();
+        }
     }
 }
 
